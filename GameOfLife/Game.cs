@@ -101,5 +101,10 @@ namespace GameOfLife
                 }
             }
         }
+
+        public void Load()
+        {
+        
+        }
     }
 }
