@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace GameOfLife
 {
     public class Program
@@ -20,7 +19,7 @@ namespace GameOfLife
             game.Print();
 
             // advance while playing
-            while (Advance())
+            while (Advance(game))
             {
                 game.Step();
                 game.Print();
@@ -79,13 +78,31 @@ namespace GameOfLife
             return game;
         }
 
-        static bool Advance()
+        static bool Advance(Game game)
         {
             if (ADVANCE_MANUALLY)
             {
-                Console.WriteLine("Press 'Enter' to go to the next step the process...");
-                // advance on keypress
-                return Console.ReadKey().Key == ConsoleKey.Enter;
+                Console.WriteLine("Press 'ENTER' advance to next generation...");
+                Console.WriteLine("Press 'ESC' to exit the game...");
+                Console.WriteLine("Press 'S' to save the game...");
+
+                while (true)
+                {
+                    switch (Console.ReadKey().Key)
+                    {
+                        // continue the game
+                        case ConsoleKey.Enter:
+                            return true;
+
+                        case ConsoleKey.S:
+                            game.SaveGame();
+                            Console.WriteLine("Game successfully saved!");
+                            break;
+
+                        case ConsoleKey.Escape:
+                            return false;
+                    }
+                }
             }
             else
             {
