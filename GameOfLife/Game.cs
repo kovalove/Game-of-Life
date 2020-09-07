@@ -30,7 +30,7 @@ namespace GameOfLife
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    Console.Write(cells[r, c] ? " " : "+");
+                    Console.Write(cells[r, c] ? "+" : " ");
                 }
                 Console.WriteLine();
             }
