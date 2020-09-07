@@ -8,11 +8,9 @@ namespace GameOfLife
         public int Rows { get; set; }
         public int Columns { get; set; }
         public bool[,] Cells { get; set; }
-        private readonly Random random;
 
         public Game(int rows, int columns)
         {
-            random = new Random();
             Setup(rows, columns);
         }
 
@@ -22,7 +20,6 @@ namespace GameOfLife
             Columns = columns;
             Cells = new bool[rows, columns];
         }
-
 
         /// <summary>
         /// Print the game to the console.
@@ -41,7 +38,6 @@ namespace GameOfLife
                 Console.WriteLine();
             }
         }
-
         
         /// <summary>
         /// Count number of alive cells around the given position.
@@ -99,6 +95,8 @@ namespace GameOfLife
         /// </summary>
         public void Randomize()
         {
+            Random random = new Random();
+
             for (int rows = 0; rows < Rows; rows++)
             {
                 for (int cells = 0; cells < Columns; cells++)
