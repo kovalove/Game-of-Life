@@ -74,7 +74,7 @@ namespace GameOfLife
         {
             // TODO: load from file
             Game game = new Game(0, 0);
-            game.Load();
+            game.Load("../../../save.txt");
             return game;
         }
 

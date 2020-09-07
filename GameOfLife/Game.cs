@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace GameOfLife
 {
@@ -11,10 +12,15 @@ namespace GameOfLife
 
         public Game(int rows, int columns)
         {
+            random = new Random();
+            Setup(rows, columns);
+        }
+
+        private void Setup(int rows, int columns)
+        {
             Rows = rows;
             Columns = columns;
             Cells = new bool[rows, columns];
-            random = new Random();
         }
 
 
@@ -102,8 +108,25 @@ namespace GameOfLife
             }
         }
 
-        public void Load()
+        public void Load(string filename)
         {
+            using (StreamReader reader = new StreamReader(filename))
+            {
+                string[] size = reader.ReadLine().Split(" ");
+                int rows = int.Parse(size[0]);
+                int columns = int.Parse(size[1]);
+                Setup(rows, columns);
+
+                for (int r = 0; r < rows; r++)
+                {
+                    string line = reader.ReadLine();
+                    for (int c = 0; c < line.Length; c++)
+                    {
+                        bool alive = line[c] == '+';
+                        Cells[r, c] = alive;
+                    }
+                }
+            }
 
         }
 
