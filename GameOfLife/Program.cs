@@ -5,7 +5,7 @@ namespace GameOfLife
 {
     public class Program
     {
-        const bool ADVANCE_MANUALLY = false;
+        const bool ADVANCE_MANUALLY = true;
 
         static void Main(string[] args)
         {
@@ -83,8 +83,9 @@ namespace GameOfLife
         {
             if (ADVANCE_MANUALLY)
             {
-                // TODO: implement advance on keypress
-                return false;
+                Console.WriteLine("Press 'Enter' to go to the next step the process...");
+                // advance on keypress
+                return Console.ReadKey().Key == ConsoleKey.Enter;
             }
             else
             {
