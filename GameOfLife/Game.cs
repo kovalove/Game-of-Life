@@ -4,16 +4,16 @@ namespace GameOfLife
 {
     public class Game
     {
-        private readonly int rows;
-        private readonly int columns;
-        private readonly bool[,] cells;
+        public int Rows { get; set; }
+        public int Columns { get; set; }
+        public bool[,] Cells { get; set; }
         private readonly Random random;
 
         public Game(int rows, int columns)
         {
-            this.rows = rows;
-            this.columns = columns;
-            cells = new bool[rows, columns];
+            Rows = rows;
+            Columns = columns;
+            Cells = new bool[rows, columns];
             random = new Random();
         }
 
@@ -26,11 +26,11 @@ namespace GameOfLife
             Console.Clear();
             //Console.SetCursorPosition(1, 1);
 
-            for (int r = 0; r < rows; r++)
+            for (int rows = 0; rows < Rows; rows++)
             {
-                for (int c = 0; c < columns; c++)
+                for (int cells = 0; cells < Columns; cells++)
                 {
-                    Console.Write(cells[r, c] ? "+" : " ");
+                    Console.Write(Cells[rows, cells] ? "+" : " ");
                 }
                 Console.WriteLine();
             }
@@ -40,16 +40,16 @@ namespace GameOfLife
         /// <summary>
         /// Count number of alive cells around the given position.
         /// </summary>
-        public int CountNearby(int x, int y)
+        private int CountNearby(int x, int y)
         {
             int count = 0;
-            for (int r = x - 1; r < x + 2; r++)
+            for (int rows = x - 1; rows < x + 2; rows++)
             {
-                for (int c = y - 1; c < y + 2; c++)
+                for (int cells = y - 1; cells < y + 2; cells++)
                 {
                     // do not count self
-                    if (r == x && c == y) continue;
-                    if (IsAlive(r, c)) count++;
+                    if (rows == x && cells == y) continue;
+                    if (IsAlive(rows, cells)) count++;
                 }
             }
             return count;
@@ -58,11 +58,11 @@ namespace GameOfLife
         /// <summary>
         /// Chek if cell by the given position is alive.
         /// </summary>
-        public bool IsAlive(int r, int c)
+        private bool IsAlive(int rows, int cells)
         {
-            if (r < 0 || c < 0) return false;
-            if (r >= rows || c >= columns) return false;
-            return cells[r, c];
+            if (rows < 0 || cells < 0) return false;
+            if (rows >= Rows || cells >= Columns) return false;
+            return Cells[rows, cells];
         }
 
         /// <summary>
@@ -70,18 +70,18 @@ namespace GameOfLife
         /// </summary>
         public void Step()
         {
-            for (int r = 0; r < rows; r++)
+            for (int rows = 0; rows < Rows; rows++)
             {
-                for (int c = 0; c < columns; c++)
+                for (int cells = 0; cells < Columns; cells++)
                 {
-                    int nearby = CountNearby(r, c);
+                    int nearby = CountNearby(rows, cells);
                     if (nearby < 2 || nearby > 3)
                     {
-                        cells[r, c] = false;
+                        Cells[rows, cells] = false;
                     }
                     else if (nearby == 3)
                     {
-                        cells[r, c] = true;
+                        Cells[rows, cells] = true;
                     }
 
                 }
@@ -93,18 +93,23 @@ namespace GameOfLife
         /// </summary>
         public void Randomize()
         {
-            for (int r = 0; r < rows; r++)
+            for (int rows = 0; rows < Rows; rows++)
             {
-                for (int c = 0; c < columns; c++)
+                for (int cells = 0; cells < Columns; cells++)
                 {
-                    cells[r, c] = random.Next(0, 2) == 1;
+                    Cells[rows, cells] = random.Next(0, 2) == 1;
                 }
             }
         }
 
         public void Load()
         {
-        
+
+        }
+
+        public void SaveGame()
+        {
+            
         }
     }
 }
