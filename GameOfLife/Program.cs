@@ -37,9 +37,9 @@ namespace GameOfLife
             while (true)
             {
                 Console.Write("Selection: ");
-                string input = Console.ReadLine();
-                int selection = int.Parse(input);
-
+                //string input = Console.ReadLine();
+                int selection; 
+                if (int.TryParse(Console.ReadLine(), out selection))
                 switch (selection)
                 {
                     case 1:
@@ -58,11 +58,8 @@ namespace GameOfLife
         static Game CreateGame()
         {
             // read input to start the game
-            Console.Write("Enter the number of rows: ");
-            int rows = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter the number of Columns: ");
-            int columns = int.Parse(Console.ReadLine());
+            int rows = Ask("Enter the number of rows: ");
+            int columns = Ask("Enter the number of columns: ");
 
             // initailize game with randomly dead or alive cells
             Game game = new Game(rows, columns);
@@ -70,9 +67,26 @@ namespace GameOfLife
             return game;
         }
 
+        static int Ask(string label)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.Write(label);
+                    string input = Console.ReadLine();
+                    return int.Parse(input);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
         static Game LoadGame()
         {
-            // TODO: load from file
+            // load from file
             Game game = new Game(0, 0);
             game.Load("../../../save.txt");
             return game;
