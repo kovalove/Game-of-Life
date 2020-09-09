@@ -58,8 +58,8 @@ namespace GameOfLife
         static Game CreateGame()
         {
             // read input to start the game
-            int rows = Ask("Enter the number of rows: ");
-            int columns = Ask("Enter the number of columns: ");
+            int rows = Ask("Enter the number of rows (max: 45000): ");
+            int columns = Ask("Enter the number of columns (max: 45000): ");
 
             // initailize game with randomly dead or alive cells
             Game game = new Game(rows, columns);
@@ -76,9 +76,9 @@ namespace GameOfLife
                     Console.Write(label);
                     int input = int.Parse(Console.ReadLine());
 
-                    if (input <= 0)
+                    if (input <= 0 || input > 45000)
                     {
-                        Console.WriteLine("The number should be more than 0");
+                        Console.WriteLine("Please enter the number in the range from 1 to 45000");
                     }
                     else
                     {
