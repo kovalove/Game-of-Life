@@ -128,9 +128,24 @@ namespace GameOfLife
 
         }
 
-        public void SaveGame()
+        public void SaveGame(string filename)
         {
-            
+            using (StreamWriter writer = new StreamWriter(filename))
+            {
+                writer.Write(Rows);
+                writer.Write(' ');
+                writer.Write(Columns);
+                writer.WriteLine();
+
+                for (int r = 0; r < Rows; r++)
+                {
+                    for (int c = 0; c < Columns; c++)
+                    {
+                        writer.Write(Cells[r, c] ? "+" : " ");
+                    }
+                    writer.WriteLine();
+                }
+            }
         }
     }
 }

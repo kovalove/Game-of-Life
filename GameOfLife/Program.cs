@@ -109,7 +109,7 @@ namespace GameOfLife
                             return true;
 
                         case ConsoleKey.S:
-                            game.SaveGame();
+                            game.SaveGame("../../../save.txt");
                             Console.WriteLine("Game successfully saved!");
                             break;
 
