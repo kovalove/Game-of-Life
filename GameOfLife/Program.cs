@@ -74,8 +74,16 @@ namespace GameOfLife
                 try
                 {
                     Console.Write(label);
-                    string input = Console.ReadLine();
-                    return int.Parse(input);
+                    int input = int.Parse(Console.ReadLine());
+
+                    if (input <= 0)
+                    {
+                        Console.WriteLine("The number should be more than 0");
+                    }
+                    else
+                    {
+                        return input;
+                    }
                 }
                 catch (Exception e)
                 {
