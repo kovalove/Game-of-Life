@@ -8,6 +8,7 @@ namespace GameOfLife
         private int Rows;
         private int Columns;
         private bool[,] Cells;
+        private bool[,] Buffer;
         private int CountStep = 1;
 
         public Game(int rows, int columns)
@@ -20,6 +21,7 @@ namespace GameOfLife
             Rows = rows;
             Columns = columns;
             Cells = new bool[rows, columns];
+            Buffer = new bool[rows, columns];
         }
 
         /// <summary>
@@ -55,9 +57,9 @@ namespace GameOfLife
         private int CountNearby(int x, int y)
         {
             int count = 0;
-            for (int r = x - 1; r < x + 2; r++)
+            for (int r = x - 1; r <= x + 1; r++)
             {
-                for (int c = y - 1; c < y + 2; c++)
+                for (int c = y - 1; c <= y + 1; c++)
                 {
                     // do not count self
                     if (r == x && c == y) continue;
@@ -70,11 +72,11 @@ namespace GameOfLife
         /// <summary>
         /// Chek if cell by the given position is alive.
         /// </summary>
-        private bool IsAlive(int rows, int cells)
+        private bool IsAlive(int rows, int columns)
         {
-            if (rows < 0 || cells < 0) return false;
-            if (rows >= Rows || cells >= Columns) return false;
-            return Cells[rows, cells];
+            if (rows < 0 || columns < 0) return false;
+            if (rows >= Rows || columns >= Columns) return false;
+            return Cells[rows, columns];
         }
 
         /// <summary>
@@ -87,17 +89,22 @@ namespace GameOfLife
             {
                 for (int c = 0; c < Columns; c++)
                 {
+                    Buffer[r, c] = Cells[r, c];
                     int nearby = CountNearby(r, c);
                     if (nearby < 2 || nearby > 3)
                     {
-                        Cells[r, c] = false;
+                        Buffer[r, c] = false;
                     }
                     else if (nearby == 3)
                     {
-                        Cells[r, c] = true;
+                        Buffer[r, c] = true;
                     }
                 }
             }
+
+            bool[,] temp = Cells;
+            Cells = Buffer;
+            Buffer = temp;
         }
 
         /// <summary>
