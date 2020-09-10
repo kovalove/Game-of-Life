@@ -8,6 +8,7 @@ namespace GameOfLife
         private int Rows;
         private int Columns;
         private bool[,] Cells;
+        private int CountStep = 1;
 
         public Game(int rows, int columns)
         {
@@ -28,17 +29,26 @@ namespace GameOfLife
         {
             Console.Clear();
             //Console.SetCursorPosition(1, 1);
+            int count = 0;
 
             for (int r = 0; r < Rows; r++)
             {
                 for (int c = 0; c < Columns; c++)
                 {
                     Console.Write(Cells[r, c] ? "+" : " ");
+                    if (Cells[r, c] == true)
+                    {
+                        count++;
+                    }
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
+            Console.WriteLine("Count of live cells: {0}", count);
+            Console.WriteLine("Step: {0}", CountStep);
+            Console.WriteLine();
         }
-        
+
         /// <summary>
         /// Count number of alive cells around the given position.
         /// </summary>
@@ -72,6 +82,7 @@ namespace GameOfLife
         /// </summary>
         public void Step()
         {
+            CountStep++;
             for (int r = 0; r < Rows; r++)
             {
                 for (int c = 0; c < Columns; c++)
@@ -85,7 +96,6 @@ namespace GameOfLife
                     {
                         Cells[r, c] = true;
                     }
-
                 }
             }
         }
