@@ -89,7 +89,6 @@ namespace GameOfLife
             {
                 for (int c = 0; c < Columns; c++)
                 {
-                    Buffer[r, c] = Cells[r, c];
                     int nearby = CountNearby(r, c);
                     if (nearby < 2 || nearby > 3)
                     {
@@ -98,6 +97,10 @@ namespace GameOfLife
                     else if (nearby == 3)
                     {
                         Buffer[r, c] = true;
+                    } 
+                    else
+                    {
+                        Buffer[r, c] = Cells[r, c];
                     }
                 }
             }
