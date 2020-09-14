@@ -9,7 +9,7 @@ namespace GameOfLife
         private int Columns;
         private bool[,] Cells;
         private bool[,] Buffer;
-        private int CountStep = 1;
+        private int Generation = 1;
 
         public Game(int rows, int columns)
         {
@@ -47,7 +47,7 @@ namespace GameOfLife
             }
             Console.WriteLine();
             Console.WriteLine("Count of live cells: {0}", count);
-            Console.WriteLine("Step: {0}", CountStep);
+            Console.WriteLine("Step: {0}", Generation);
             Console.WriteLine();
         }
 
@@ -84,7 +84,7 @@ namespace GameOfLife
         /// </summary>
         public void Step()
         {
-            CountStep++;
+            Generation++;
             for (int r = 0; r < Rows; r++)
             {
                 for (int c = 0; c < Columns; c++)
@@ -133,6 +133,7 @@ namespace GameOfLife
                 string[] size = reader.ReadLine().Split(" ");
                 int rows = int.Parse(size[0]);
                 int columns = int.Parse(size[1]);
+                Generation = int.Parse(size[2]);
                 Setup(rows, columns);
 
                 for (int r = 0; r < rows; r++)
@@ -145,7 +146,6 @@ namespace GameOfLife
                     }
                 }
             }
-
         }
 
         public void SaveGame(string filename)
@@ -155,6 +155,8 @@ namespace GameOfLife
                 writer.Write(Rows);
                 writer.Write(' ');
                 writer.Write(Columns);
+                writer.Write(' '); ;
+                writer.Write(Generation);
                 writer.WriteLine();
 
                 for (int r = 0; r < Rows; r++)
