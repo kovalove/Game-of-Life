@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace GameOfLife
 {
     public class Terminal
     {
-        const bool ADVANCE_MANUALLY = true;
+        const bool ADVANCE_MANUALLY = false;
 
         public void Run()
         {
@@ -18,11 +17,13 @@ namespace GameOfLife
             }
 
             // show initial state
+            Stopwatch watch = Stopwatch.StartNew(); 
             game.Print();
 
             // advance while playing
-            while (Advance(game))
+            while (Advance(game, watch))
             {
+                watch.Restart();
                 game.Step();
                 game.Print();
             }
@@ -102,7 +103,7 @@ namespace GameOfLife
             return game;
         }
 
-        private bool Advance(Game game)
+        private bool Advance(Game game, Stopwatch watch)
         {
             if (ADVANCE_MANUALLY)
             {
@@ -131,7 +132,13 @@ namespace GameOfLife
             else
             {
                 // advance every 1s
-                System.Threading.Thread.Sleep(1000);
+                long elapsed = watch.ElapsedMilliseconds;
+                Console.WriteLine("ELAPSED: " + elapsed);
+                int remain = 1000 - (int)elapsed;
+                if (remain > 0)
+                {
+                    System.Threading.Thread.Sleep(remain);
+                }
                 return true;
             }
         }
