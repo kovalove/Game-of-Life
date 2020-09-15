@@ -5,8 +5,6 @@ namespace GameOfLife
 {
     public class Terminal
     {
-        const bool ADVANCE_MANUALLY = false;
-
         public void Run()
         {
             Game game = Start();
@@ -17,7 +15,7 @@ namespace GameOfLife
             }
 
             // show initial state
-            Stopwatch watch = Stopwatch.StartNew(); 
+            Stopwatch watch = Stopwatch.StartNew();
             game.Print();
 
             // advance while playing
@@ -105,7 +103,19 @@ namespace GameOfLife
 
         private bool Advance(Game game, Stopwatch watch)
         {
-            if (ADVANCE_MANUALLY)
+            bool pause = false;
+            Console.WriteLine("Press any key to pause...");
+            while (watch.ElapsedMilliseconds < 1000)
+            {
+                if (Console.KeyAvailable)
+                {
+                    pause = true;
+                    Console.ReadKey();
+                    break;
+                }
+            }
+
+            if (pause)
             {
                 Console.WriteLine("Press 'ENTER' advance to next generation...");
                 Console.WriteLine("Press 'ESC' to exit the game...");
@@ -129,18 +139,8 @@ namespace GameOfLife
                     }
                 }
             }
-            else
-            {
-                // advance every 1s
-                long elapsed = watch.ElapsedMilliseconds;
-                Console.WriteLine("ELAPSED: " + elapsed);
-                int remain = 1000 - (int)elapsed;
-                if (remain > 0)
-                {
-                    System.Threading.Thread.Sleep(remain);
-                }
-                return true;
-            }
+
+            return true;
         }
     }
 }
