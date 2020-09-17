@@ -11,11 +11,21 @@ namespace GameOfLife
         private bool[,] Buffer;
         private int Generation = 1;
 
+        /// <summary>
+        /// Initialize new instance of the given size.
+        /// </summary>
+        /// <param name="rows">Number of rows.</param>
+        /// <param name="columns">Number of columns.</param>
         public Game(int rows, int columns)
         {
             Setup(rows, columns);
         }
 
+        /// <summary>
+        /// Initialize primary and auxiliary arrays of the given size.
+        /// </summary>
+        /// <param name="rows">Number of rows.</param>
+        /// <param name="columns">Number of columns.</param>
         private void Setup(int rows, int columns)
         {
             Rows = rows;
@@ -55,6 +65,9 @@ namespace GameOfLife
         /// <summary>
         /// Count number of alive cells around the given position.
         /// </summary>
+        /// <param name="x">X coordinate of the cell.</param>
+        /// <param name="y">Y coordinate of the cell.</param>
+        /// <returns>The number of alive cells around the given position.</returns>
         private int CountNearby(int x, int y)
         {
             int count = 0;
@@ -63,16 +76,25 @@ namespace GameOfLife
                 for (int c = y - 1; c <= y + 1; c++)
                 {
                     // Do not count self
-                    if (r == x && c == y) continue;
-                    if (IsAlive(r, c)) count++;
+                    if (r == x && c == y)
+                    {
+                        continue;
+                    }
+                    if (IsAlive(r, c))
+                    {
+                        count++;
+                    }
                 }
             }
             return count;
         }
 
         /// <summary>
-        /// Chek if cell by the given position is alive.
+        /// Check if cell by the given position is alive.
         /// </summary>
+        /// <param name="rows">X coordinate position.</param>
+        /// <param name="columns">Y coordinate position.</param>
+        /// <returns>True if cell is alive; false otherwise.</returns>
         private bool IsAlive(int rows, int columns)
         {
             if (rows < 0 || columns < 0)
@@ -134,6 +156,10 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Read game state from the file.
+        /// </summary>
+        /// <param name="filename">Path to a file to read.</param>
         public void Load(string filename)
         {
             using (StreamReader reader = new StreamReader(filename))
@@ -156,6 +182,10 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Save the game to a text file.
+        /// </summary>
+        /// <param name="filename">Path to a file where to write game state.</param>
         public void SaveGame(string filename)
         {
             using (StreamWriter writer = new StreamWriter(filename))

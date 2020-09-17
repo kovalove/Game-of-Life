@@ -5,6 +5,9 @@ namespace GameOfLife
 {
     public class Terminal
     {
+        /// <summary>
+        /// Start the main program loop.
+        /// </summary>
         public void Run()
         {
             Game game = Start();
@@ -27,6 +30,10 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Loading or creating a new game depending on the user choise.
+        /// </summary>
+        /// <returns>New game instance; null if user want to exit the programm.</returns>
         private Game Start()
         {
             Console.WriteLine("GAME OF LIFE");
@@ -55,6 +62,10 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Read the size and initailize game with randomly dead or alive cells.
+        /// </summary>
+        /// <returns>New game state of the user specified size.</returns>
         private Game CreateGame()
         {
             // Read input to start the game
@@ -67,6 +78,12 @@ namespace GameOfLife
             return game;
         }
 
+        /// <summary>
+        /// Read number from the user input withing defined range.
+        /// Number must be greater than zero and less than 45000.
+        /// </summary>
+        /// <param name="label">Label to add when asking for a value.</param>
+        /// <returns>A valid number within defined range.</returns>
         private int Ask(string label)
         {
             while (true)
@@ -92,6 +109,10 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Loading game from file.
+        /// </summary>
+        /// <returns>Newly crated game instance having data from file.</returns>
         private Game LoadGame()
         {
             // Load from file
@@ -100,6 +121,12 @@ namespace GameOfLife
             return game;
         }
 
+        /// <summary>
+        /// Process user input and decide if game should advance to a next step.
+        /// </summary>
+        /// <param name="game">The game in which to perform an operation.</param>
+        /// <param name="watch">Timer that tracks elapsed time of the current cycle.</param>
+        /// <returns>True when game should advance to a next step; false to exit the program.</returns>
         private bool Advance(Game game, Stopwatch watch)
         {
             bool pause = false;
@@ -145,6 +172,7 @@ namespace GameOfLife
         /// <summary>
         /// Print game state to the console.
         /// </summary>
+        /// <param name="game">Game to be printed.</param>
         public void Print(Game game)
         {
             Console.Clear();
