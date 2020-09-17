@@ -14,11 +14,11 @@ namespace GameOfLife
                 return;
             }
 
-            // show initial state
+            // Show initial state
             Stopwatch watch = Stopwatch.StartNew();
             game.Print();
 
-            // advance while playing
+            // Advance while playing
             while (Advance(game, watch))
             {
                 watch.Restart();
@@ -38,7 +38,6 @@ namespace GameOfLife
             while (true)
             {
                 Console.Write("Selection: ");
-                //string input = Console.ReadLine();
                 int selection;
                 if (int.TryParse(Console.ReadLine(), out selection))
                     switch (selection)
@@ -58,11 +57,11 @@ namespace GameOfLife
 
         private Game CreateGame()
         {
-            // read input to start the game
+            // Read input to start the game
             int rows = Ask("Enter the number of rows (max: 45000): ");
             int columns = Ask("Enter the number of columns (max: 45000): ");
 
-            // initailize game with randomly dead or alive cells
+            // Initailize game with randomly dead or alive cells
             Game game = new Game(rows, columns);
             game.Randomize();
             return game;
@@ -95,9 +94,9 @@ namespace GameOfLife
 
         private Game LoadGame()
         {
-            // load from file
+            // Load from file
             Game game = new Game(0, 0);
-            game.Load("../../../save.txt");
+            game.Load("save.txt");
             return game;
         }
 
@@ -125,12 +124,12 @@ namespace GameOfLife
                 {
                     switch (Console.ReadKey().Key)
                     {
-                        // continue the game
+                        // Continue the game
                         case ConsoleKey.Enter:
                             return true;
 
                         case ConsoleKey.S:
-                            game.SaveGame("../../../save.txt");
+                            game.SaveGame("save.txt");
                             Console.WriteLine("Game successfully saved!");
                             break;
 

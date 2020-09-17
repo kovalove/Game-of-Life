@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace GameOfLife
+﻿namespace GameOfLife
 {
     public class Program
     {

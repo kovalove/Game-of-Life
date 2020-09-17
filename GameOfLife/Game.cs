@@ -43,8 +43,10 @@ namespace GameOfLife
                         count++;
                     }
                 }
+
                 Console.WriteLine();
             }
+
             Console.WriteLine();
             Console.WriteLine("Count of live cells: {0}", count);
             Console.WriteLine("Step: {0}", Generation);
@@ -61,7 +63,7 @@ namespace GameOfLife
             {
                 for (int c = y - 1; c <= y + 1; c++)
                 {
-                    // do not count self
+                    // Do not count self
                     if (r == x && c == y) continue;
                     if (IsAlive(r, c)) count++;
                 }
@@ -74,8 +76,15 @@ namespace GameOfLife
         /// </summary>
         private bool IsAlive(int rows, int columns)
         {
-            if (rows < 0 || columns < 0) return false;
-            if (rows >= Rows || columns >= Columns) return false;
+            if (rows < 0 || columns < 0)
+            {
+                return false;
+            }
+            if (rows >= Rows || columns >= Columns)
+            {
+                return false;
+            }
+
             return Cells[rows, columns];
         }
 
