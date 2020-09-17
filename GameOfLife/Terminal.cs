@@ -16,14 +16,14 @@ namespace GameOfLife
 
             // Show initial state
             Stopwatch watch = Stopwatch.StartNew();
-            game.Print();
+            Print(game);
 
             // Advance while playing
             while (Advance(game, watch))
             {
                 watch.Restart();
                 game.Step();
-                game.Print();
+                Print(game);
             }
         }
 
@@ -140,6 +140,15 @@ namespace GameOfLife
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Print game state to the console.
+        /// </summary>
+        public void Print(Game game)
+        {
+            Console.Clear();
+            game.Print(Console.Out);
         }
     }
 }

@@ -25,32 +25,31 @@ namespace GameOfLife
         }
 
         /// <summary>
-        /// Print the game to the console.
+        /// Print game state to the provided output.
         /// </summary>
-        public void Print()
+        /// <param name="output">Destination where to write the game state.</param>
+        public void Print(TextWriter output)
         {
-            Console.Clear();
-            //Console.SetCursorPosition(1, 1);
             int count = 0;
 
             for (int r = 0; r < Rows; r++)
             {
                 for (int c = 0; c < Columns; c++)
                 {
-                    Console.Write(Cells[r, c] ? "+" : " ");
+                    output.Write(Cells[r, c] ? "+" : " ");
                     if (Cells[r, c] == true)
                     {
                         count++;
                     }
                 }
 
-                Console.WriteLine();
+                output.WriteLine();
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Count of live cells: {0}", count);
-            Console.WriteLine("Step: {0}", Generation);
-            Console.WriteLine();
+            output.WriteLine();
+            output.WriteLine("Count of live cells: {0}", count);
+            output.WriteLine("Step: {0}", Generation);
+            output.WriteLine();
         }
 
         /// <summary>
