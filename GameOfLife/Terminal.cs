@@ -1,10 +1,23 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Timers;
 
 namespace GameOfLife
 {
     public class Terminal
     {
+        private Timer timer;
+        private bool waiting;
+        private Stopwatch watch;
+
+        public Terminal()
+        {
+            timer = new Timer(1000);
+            timer.AutoReset = false;
+            timer.Elapsed += OnTimerElapsed;
+            watch = new Stopwatch();
+        }
+
         /// <summary>
         /// Start the main program loop.
         /// </summary>
@@ -18,13 +31,13 @@ namespace GameOfLife
             }
 
             // Show initial state
-            Stopwatch watch = Stopwatch.StartNew();
+            StartTimer();
             Print(game);
 
             // Advance while playing
-            while (Advance(game, watch))
+            while (Advance(game))
             {
-                watch.Restart();
+                StartTimer();
                 game.Step();
                 Print(game);
             }
@@ -125,13 +138,12 @@ namespace GameOfLife
         /// Process user input and decide if game should advance to a next step.
         /// </summary>
         /// <param name="game">The game in which to perform an operation.</param>
-        /// <param name="watch">Timer that tracks elapsed time of the current cycle.</param>
         /// <returns>True when game should advance to a next step; false to exit the program.</returns>
-        private bool Advance(Game game, Stopwatch watch)
+        private bool Advance(Game game)
         {
             bool pause = false;
             Console.WriteLine("Press any key to pause...");
-            while (watch.ElapsedMilliseconds < 1000)
+            while (waiting)
             {
                 if (Console.KeyAvailable)
                 {
@@ -175,8 +187,27 @@ namespace GameOfLife
         /// <param name="game">Game to be printed.</param>
         public void Print(Game game)
         {
+            long processingTime = watch.ElapsedMilliseconds;
+
             Console.Clear();
             game.Print(Console.Out);
+            long printingTime = watch.ElapsedMilliseconds - processingTime;
+
+            Console.WriteLine("Processing Time: " + processingTime + "ms");
+            Console.WriteLine("Printing Time: " + printingTime + "ms");
+        }
+
+
+        private void StartTimer()
+        {
+            waiting = true;
+            timer.Start();
+            watch.Restart();
+        }
+
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            waiting = false;
         }
     }
 }
