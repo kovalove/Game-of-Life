@@ -12,7 +12,7 @@ namespace GameOfLife
         private int Generation = 1;
 
         /// <summary>
-        /// Initialize new instance of the given size.
+        /// Initialize new instance of the game of the given size.
         /// </summary>
         /// <param name="rows">Number of rows.</param>
         /// <param name="columns">Number of columns.</param>
