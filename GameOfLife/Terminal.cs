@@ -148,7 +148,7 @@ namespace GameOfLife
                 if (Console.KeyAvailable)
                 {
                     pause = true;
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                     break;
                 }
             }
@@ -161,7 +161,7 @@ namespace GameOfLife
 
                 while (true)
                 {
-                    switch (Console.ReadKey().Key)
+                    switch (Console.ReadKey(true).Key)
                     {
                         // Continue the game
                         case ConsoleKey.Enter:
