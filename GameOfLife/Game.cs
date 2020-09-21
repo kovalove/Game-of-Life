@@ -1,15 +1,17 @@
 ﻿using System;
-using System.IO;
 
 namespace GameOfLife
 {
+    /// <summary>
+    /// Model of the game including basic logic operations.
+    /// </summary>
     public class Game
     {
-        private int Rows;
-        private int Columns;
+        public int Rows { get; private set; }
+        public int Columns { get; private set; }
         private bool[,] Cells;
         private bool[,] Buffer;
-        private int Generation = 1;
+        public int Generation { get; private set; } = 1;
 
         /// <summary>
         /// Initialize new instance of the game of the given size.
@@ -19,6 +21,15 @@ namespace GameOfLife
         public Game(int rows, int columns)
         {
             Setup(rows, columns);
+        }
+
+        public Game(bool[,] cells, int generation)
+        {
+            Cells = cells;
+            Rows = cells.GetLength(0);
+            Columns = cells.GetLength(1);
+            Buffer = new bool[Rows, Columns];
+            Generation = generation;
         }
 
         /// <summary>
@@ -32,34 +43,6 @@ namespace GameOfLife
             Columns = columns;
             Cells = new bool[rows, columns];
             Buffer = new bool[rows, columns];
-        }
-
-        /// <summary>
-        /// Print game state to the provided output.
-        /// </summary>
-        /// <param name="output">Destination where to write the game state.</param>
-        public void Print(TextWriter output)
-        {
-            int count = 0;
-
-            for (int r = 0; r < Rows; r++)
-            {
-                for (int c = 0; c < Columns; c++)
-                {
-                    output.Write(Cells[r, c] ? "+" : " ");
-                    if (Cells[r, c] == true)
-                    {
-                        count++;
-                    }
-                }
-
-                output.WriteLine();
-            }
-
-            output.WriteLine();
-            output.WriteLine("Count of live cells: {0}", count);
-            output.WriteLine("Step: {0}", Generation);
-            output.WriteLine();
         }
 
         /// <summary>
@@ -95,7 +78,7 @@ namespace GameOfLife
         /// <param name="rows">X coordinate position.</param>
         /// <param name="columns">Y coordinate position.</param>
         /// <returns>True if cell is alive; false otherwise.</returns>
-        private bool IsAlive(int rows, int columns)
+        public bool IsAlive(int rows, int columns)
         {
             if (rows < 0 || columns < 0)
             {
@@ -152,58 +135,6 @@ namespace GameOfLife
                 for (int c = 0; c < Columns; c++)
                 {
                     Cells[r, c] = random.Next(0, 2) == 1;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Read game state from the file.
-        /// </summary>
-        /// <param name="filename">Path to a file to read.</param>
-        public void Load(string filename)
-        {
-            using (StreamReader reader = new StreamReader(filename))
-            {
-                string[] size = reader.ReadLine().Split(" ");
-                int rows = int.Parse(size[0]);
-                int columns = int.Parse(size[1]);
-                Generation = int.Parse(size[2]);
-                Setup(rows, columns);
-
-                for (int r = 0; r < rows; r++)
-                {
-                    string line = reader.ReadLine();
-                    for (int c = 0; c < line.Length; c++)
-                    {
-                        bool alive = line[c] == '+';
-                        Cells[r, c] = alive;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Save the game to a text file.
-        /// </summary>
-        /// <param name="filename">Path to a file where to write game state.</param>
-        public void SaveGame(string filename)
-        {
-            using (StreamWriter writer = new StreamWriter(filename))
-            {
-                writer.Write(Rows);
-                writer.Write(' ');
-                writer.Write(Columns);
-                writer.Write(' '); ;
-                writer.Write(Generation);
-                writer.WriteLine();
-
-                for (int r = 0; r < Rows; r++)
-                {
-                    for (int c = 0; c < Columns; c++)
-                    {
-                        writer.Write(Cells[r, c] ? "+" : " ");
-                    }
-                    writer.WriteLine();
                 }
             }
         }

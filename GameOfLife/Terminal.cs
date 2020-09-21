@@ -4,11 +4,16 @@ using System.Timers;
 
 namespace GameOfLife
 {
+    /// <summary>
+    /// Allows to interact with the game through console window.
+    /// </summary>
     public class Terminal
     {
         private Timer timer;
         private bool waiting;
         private Stopwatch watch;
+        private readonly GamePrinter printer = new GamePrinter();
+        private readonly GameSaver saver = new GameSaver();
 
         public Terminal()
         {
@@ -65,7 +70,12 @@ namespace GameOfLife
                         case 1:
                             return CreateGame();
                         case 2:
-                            return LoadGame();
+                            Game game = LoadGame();
+                            if (game != null)
+                            {
+                                return game;
+                            }
+                            break;
                         case 0:
                             return null;
                         default:
@@ -129,9 +139,7 @@ namespace GameOfLife
         private Game LoadGame()
         {
             // Load from file
-            Game game = new Game(0, 0);
-            game.Load("save.txt");
-            return game;
+            return saver.Load("save.txt");
         }
 
         /// <summary>
@@ -168,7 +176,7 @@ namespace GameOfLife
                             return true;
 
                         case ConsoleKey.S:
-                            game.SaveGame("save.txt");
+                            saver.SaveGame(game, "save.txt");
                             Console.WriteLine("Game successfully saved!");
                             break;
 
@@ -190,7 +198,7 @@ namespace GameOfLife
             long processingTime = watch.ElapsedMilliseconds;
 
             Console.Clear();
-            game.Print(Console.Out);
+            printer.Print(game, Console.Out);
             long printingTime = watch.ElapsedMilliseconds - processingTime;
 
             Console.WriteLine("Processing Time: " + processingTime + "ms");
