@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 
 namespace GameOfLife
 {
@@ -11,7 +11,7 @@ namespace GameOfLife
         /// Print game state to the provided output.
         /// </summary>
         /// <param name="output">Destination where to write the game state.</param>
-        public void Print(Game game, TextWriter output)
+        public void Print(Game game)
         {
             int count = 0;
 
@@ -20,20 +20,20 @@ namespace GameOfLife
                 for (int c = 0; c < game.Columns; c++)
                 {
                     bool alive = game.IsAlive(r, c);
-                    output.Write(alive ? "+" : " ");
+                    Console.Write(alive ? "+" : " ");
                     if (alive)
                     {
                         count++;
                     }
                 }
 
-                output.WriteLine();
+                Console.WriteLine();
             }
 
-            output.WriteLine();
-            output.WriteLine("Count of live cells: {0}", count);
-            output.WriteLine("Step: {0}", game.Generation);
-            output.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Count of live cells: {0}", count);
+            Console.WriteLine("Step: {0}", game.Generation);
+            Console.WriteLine();
         }
     }
 }

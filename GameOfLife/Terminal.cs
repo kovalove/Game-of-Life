@@ -95,22 +95,23 @@ namespace GameOfLife
         }
 
         /// <summary>
-        /// Read the size and initailize game with randomly dead or alive cells.
+        /// Read the size and initailize games with randomly dead or alive cells.
         /// </summary>
-        /// <returns>New game state of the user specified size.</returns>
+        /// <returns>New game states of the user specified size and quantity.</returns>
         private void CreateGame()
         {
             // Read input to start the game
             int rows = Ask("Enter the number of rows (max: 45000): ");
             int columns = Ask("Enter the number of columns (max: 45000): ");
-            //int gamecount = AskGamesQuantity("Enter the number of games you want to generate (max: 1000): ");
+            int count = AskGamesQuantity("Enter the number of games you want to generate (max: 1000): ");
 
-            // Initailize game with randomly dead or alive cells
-            Game game = new Game(rows, columns);
-            game.Randomize();
-
-            // TODO: create multiple games
-            games.Add(game);
+            // Initailize games with randomly dead or alive cells
+            for (int i = 0; i < count; i++)
+            {
+                Game game = new Game(rows, columns);
+                game.Randomize();
+                games.Add(game);
+            }
         }
 
         /// <summary>
@@ -245,13 +246,15 @@ namespace GameOfLife
         /// <param name="game">Game to be printed.</param>
         public void Print()
         {
-            // TODO: print all games
-            Game game = games[0];
-
             long processingTime = watch.ElapsedMilliseconds;
 
             Console.Clear();
-            printer.Print(game, Console.Out);
+
+            // print all games
+            foreach (Game game in games)
+            {
+                printer.Print(game);
+            }
             long printingTime = watch.ElapsedMilliseconds - processingTime;
 
             Console.WriteLine("Processing Time: " + processingTime + "ms");
