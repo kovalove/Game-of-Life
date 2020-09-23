@@ -214,6 +214,7 @@ namespace GameOfLife
         {
             // load many games
             games = saver.LoadGames("save.txt");
+            displayGames = AskGamesPrintQuantity("Select 8 games you want to see ont the screen separated by a space (max: 8 numbers): ");
             return games != null;
         }
 
