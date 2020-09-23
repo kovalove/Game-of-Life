@@ -14,13 +14,16 @@ namespace GameOfLife
         public int Generation { get; private set; } = 1;
 
         /// <summary>
-        /// Initialize new instance of the game of the given size.
+        /// Initialize primary and auxiliary arrays of the given size.
         /// </summary>
         /// <param name="rows">Number of rows.</param>
         /// <param name="columns">Number of columns.</param>
         public Game(int rows, int columns)
         {
-            Setup(rows, columns);
+            Rows = rows;
+            Columns = columns;
+            Cells = new bool[rows, columns];
+            Buffer = new bool[rows, columns];
         }
 
         public Game(bool[,] cells, int generation)
@@ -30,19 +33,6 @@ namespace GameOfLife
             Columns = cells.GetLength(1);
             Buffer = new bool[Rows, Columns];
             Generation = generation;
-        }
-
-        /// <summary>
-        /// Initialize primary and auxiliary arrays of the given size.
-        /// </summary>
-        /// <param name="rows">Number of rows.</param>
-        /// <param name="columns">Number of columns.</param>
-        private void Setup(int rows, int columns)
-        {
-            Rows = rows;
-            Columns = columns;
-            Cells = new bool[rows, columns];
-            Buffer = new bool[rows, columns];
         }
 
         /// <summary>
