@@ -16,6 +16,7 @@ namespace GameOfLife
         private readonly GamePrinter printer = new GamePrinter();
         private readonly GameSaver saver = new GameSaver();
         private List<Game> games = new List<Game>();
+        private List<int> displayGames;
 
         public Terminal()
         {
@@ -104,6 +105,7 @@ namespace GameOfLife
             int rows = Ask("Enter the number of rows (max: 45000): ");
             int columns = Ask("Enter the number of columns (max: 45000): ");
             int count = AskGamesQuantity("Enter the number of games you want to generate (max: 1000): ");
+            displayGames = AskGamesPrintQuantity("Select 8 games you want to see ont the screen separated by a space (max: 8 numbers): ");
 
             // Initailize games with randomly dead or alive cells
             for (int i = 0; i < count; i++)
@@ -166,6 +168,35 @@ namespace GameOfLife
                     else
                     {
                         return input;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+        private List<int> AskGamesPrintQuantity(string label)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.Write(label);
+                    string[] size = Console.ReadLine().Split(" ");
+                    var list = new List<int>();
+                    foreach(string s in size)
+                    {
+                        list.Add(int.Parse(s));
+                    }
+                    
+                    if (size.Length < 0 || size.Length > 8)
+                    {
+                        Console.WriteLine("You entered more tham 8 games. Please enter maximum 8 games.");
+                    }
+                    else
+                    {
+                        return list;
                     }
                 }
                 catch (Exception e)
@@ -244,9 +275,10 @@ namespace GameOfLife
 
             Console.Clear();
 
-            // print all games
-            foreach (Game game in games)
+            // print selectedd games
+            foreach (int index in displayGames)
             {
+                Game game = games[index - 1];
                 printer.Print(game);
             }
             long printingTime = watch.ElapsedMilliseconds - processingTime;
