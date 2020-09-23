@@ -15,7 +15,7 @@ namespace GameOfLife
         private Stopwatch watch;
         private readonly GamePrinter printer = new GamePrinter();
         private readonly GameSaver saver = new GameSaver();
-        private readonly List<Game> games = new List<Game>();
+        private List<Game> games = new List<Game>();
 
         public Terminal()
         {
@@ -181,15 +181,9 @@ namespace GameOfLife
         /// <returns>Newly crated game instance having data from file.</returns>
         private bool LoadGame()
         {
-            // TODO: load many games
-            Game game = saver.Load("save.txt");
-            if (game != null)
-            {
-                games.Add(game);
-                return true;
-            }
-
-            return false;
+            // load many games
+            games = saver.LoadGames("save.txt");
+            return games != null;
         }
 
         /// <summary>
@@ -226,8 +220,8 @@ namespace GameOfLife
                             return true;
 
                         case ConsoleKey.S:
-                            // TODO: save all games
-                            saver.SaveGame(games[0], "save.txt");
+                            // save all games
+                            saver.SaveGames(games, "save.txt");
                             Console.WriteLine("Game successfully saved!");
                             break;
 
