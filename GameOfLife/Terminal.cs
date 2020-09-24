@@ -54,34 +54,20 @@ namespace GameOfLife
         /// <summary>
         /// Show main menu and perform an operation depending on the user choice.
         /// </summary>
-        /// <returns> True if application should start; false if user choose to exit.</returns>
+        /// <returns> True if application should continue; false if user choose to exit.</returns>
         private bool Start()
         {
-            Console.WriteLine("GAME OF LIFE");
-            Console.WriteLine("1. New Game");
-            Console.WriteLine("2. Load Game");
-            Console.WriteLine("0. Exit");
-            Console.WriteLine("");
-
-            while (true)
+            GameMenuOption choice = view.AskGameMenu();
+            switch (choice)
             {
-                Console.Write("Selection: ");
-                int selection;
-                bool sucess = int.TryParse(Console.ReadLine(), out selection);
-                if (sucess)
-                    switch (selection)
-                    {
-                        case 1:
-                            CreateGame();
-                            return true;
-                        case 2:
-                            return LoadGame();
-                        case 0:
-                            return false;
-                        default:
-                            Console.WriteLine("Please select item from a list.");
-                            break;
-                    }
+                case GameMenuOption.NewGame:
+                    CreateGame();
+                    return true;
+                case GameMenuOption.LoadGame:
+                    LoadGame();
+                    return true;
+                default:
+                    return false;
             }
         }
 
@@ -192,11 +178,11 @@ namespace GameOfLife
                     Console.Write(label);
                     string[] size = Console.ReadLine().Split(" ");
                     var list = new List<int>();
-                    foreach(string s in size)
+                    foreach (string s in size)
                     {
                         list.Add(int.Parse(s));
                     }
-                    
+
                     if (size.Length < 0 || size.Length > 8)
                     {
                         Console.WriteLine("You entered more tham 8 games. Please enter maximum 8 games.");
