@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GameOfLife
 {
@@ -34,6 +35,21 @@ namespace GameOfLife
             Console.WriteLine("Count of live cells: {0}", count);
             Console.WriteLine("Step: {0}", game.Generation);
             Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Print state of previously selected games to the console.
+        /// </summary>
+        /// <param name="games">List of games.</param>
+        /// <param name="selections">List of games indexes to display.</param>
+        public void PrintGames(List<Game> games, List<int> selections)
+        {
+            Console.Clear();
+            foreach (int index in selections)
+            {
+                Game game = games[index - 1];
+                Print(game);
+            }
         }
     }
 }

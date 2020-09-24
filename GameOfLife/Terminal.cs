@@ -12,8 +12,7 @@ namespace GameOfLife
     {
         private Timer timer;
         private bool waiting;
-        private Stopwatch watch;
-        private readonly GamePrinter printer = new GamePrinter();
+        private readonly GameView view = new GameView();
         private readonly GameSaver saver = new GameSaver();
         private List<Game> games = new List<Game>();
         private List<int> displayGames;
@@ -26,7 +25,6 @@ namespace GameOfLife
             timer = new Timer(1000);
             timer.AutoReset = false;
             timer.Elapsed += OnTimerElapsed;
-            watch = new Stopwatch();
         }
 
         /// <summary>
@@ -274,32 +272,16 @@ namespace GameOfLife
             return true;
         }
 
-        /// <summary>
-        /// Print state of previously selected games to the console.
-        /// </summary>
-        public void Print()
+        private void Print()
         {
-            long processingTime = watch.ElapsedMilliseconds;
-
-            Console.Clear();
-
-            // print selectedd games
-            foreach (int index in displayGames)
-            {
-                Game game = games[index - 1];
-                printer.Print(game);
-            }
-            long printingTime = watch.ElapsedMilliseconds - processingTime;
-
-            Console.WriteLine("Processing Time: " + processingTime + "ms");
-            Console.WriteLine("Printing Time: " + printingTime + "ms");
+            view.PrintGames(games, displayGames);
         }
+
 
         private void StartTimer()
         {
             waiting = true;
             timer.Start();
-            watch.Restart();
         }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
