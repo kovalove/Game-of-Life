@@ -3,9 +3,9 @@
 namespace GameOfLife
 {
     /// <summary>
-    /// Methods for displaying the game in the console window.
+    /// Presentation layer for the console window input / output operations..
     /// </summary>
-    public class GamePrinter
+    public class GameView
     {
         /// <summary>
         /// Print game state to the console.
