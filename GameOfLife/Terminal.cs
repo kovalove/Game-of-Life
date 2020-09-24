@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Timers;
 
 namespace GameOfLife
@@ -89,9 +88,9 @@ namespace GameOfLife
         private void CreateGame()
         {
             // Read input to start the game
-            int rows = Ask("Enter the number of rows (max: 45000): ");
-            int columns = Ask("Enter the number of columns (max: 45000): ");
-            int count = AskGamesQuantity("Enter the number of games you want to generate (max: 1000): ");
+            int rows = view.AskNumber("Enter the number of rows", 1, 45000);
+            int columns = view.AskNumber("Enter the number of columns", 1, 45000);
+            int count = view.AskNumber("Enter the number of games you want to generate", 1, 1000);
             displayGames = AskGamesPrintQuantity("Select 8 games you want to see ont the screen separated by a space (max: 8 numbers): ");
 
             // Initailize games with randomly dead or alive cells
@@ -100,67 +99,6 @@ namespace GameOfLife
                 Game game = new Game(rows, columns);
                 game.Randomize();
                 games.Add(game);
-            }
-        }
-
-        /// <summary>
-        /// Read number from the user input within defined range.
-        /// Number must be greater than zero and less than 45000.
-        /// </summary>
-        /// <param name="label">Label to add when asking for a value.</param>
-        /// <returns>A valid number within defined range.</returns>
-        private int Ask(string label)
-        {
-            while (true)
-            {
-                try
-                {
-                    Console.Write(label);
-                    int input = int.Parse(Console.ReadLine());
-
-                    if (input <= 0 || input > 45000)
-                    {
-                        Console.WriteLine("Please enter the number in the range from 1 to 45000");
-                    }
-                    else
-                    {
-                        return input;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Read number of games the user wants to play.
-        /// </summary>
-        /// <param name="label">Label to add when asking for a value.</param>
-        /// <returns>A valid number within defined range.</returns>
-        private int AskGamesQuantity(string label)
-        {
-            while (true)
-            {
-                try
-                {
-                    Console.Write(label);
-                    int input = int.Parse(Console.ReadLine());
-
-                    if (input <= 0 || input > 1000)
-                    {
-                        Console.WriteLine("Please enter the number in the range from 1 to 1000");
-                    }
-                    else
-                    {
-                        return input;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
             }
         }
 
