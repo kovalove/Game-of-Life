@@ -122,52 +122,48 @@ namespace GameOfLife
         /// <returns>True when program should advance to a next step; false to exit the program.</returns>
         private bool Advance()
         {
-            bool pause = false;
             Console.WriteLine("Press any key to pause...");
             while (waiting)
             {
-                if (Console.KeyAvailable)
+                if (view.IsAnyKeyDown())
                 {
-                    pause = true;
-                    Console.ReadKey(true);
-                    break;
-                }
-            }
-
-            if (pause)
-            {
-                Console.WriteLine("Press 'ENTER' advance to next generation...");
-                Console.WriteLine("Press 'ESC' to exit the game...");
-                Console.WriteLine("Press 'S' to save the game...");
-
-                while (true)
-                {
-                    switch (Console.ReadKey(true).Key)
-                    {
-                        // Continue the game
-                        case ConsoleKey.Enter:
-                            return true;
-
-                        case ConsoleKey.S:
-                            // save all games
-                            saver.SaveGames(games, "save.txt");
-                            Console.WriteLine("Game successfully saved!");
-                            break;
-
-                        case ConsoleKey.Escape:
-                            return false;
-                    }
+                    return Pause();
                 }
             }
 
             return true;
         }
 
+        /// <summary>
+        /// Pause the game until further user instructions.
+        /// </summary>
+        /// <returns>True to continue the game; false to exit.</returns>
+        private bool Pause()
+        {
+            view.ShowPauseMenu();
+            while (true)
+            {
+                switch (view.ReadPauseKey())
+                {
+                    case GamePauseOption.Continue:
+                        return true;
+
+                    case GamePauseOption.Save:
+                        // save all games
+                        saver.SaveGames(games, "save.txt");
+                        Console.WriteLine("Game successfully saved!");
+                        break;
+
+                    case GamePauseOption.Exit:
+                        return false;
+                }
+            }
+        }
+
         private void Print()
         {
             view.PrintGames(games, displayGames);
         }
-
 
         private void StartTimer()
         {

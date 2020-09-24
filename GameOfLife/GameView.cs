@@ -42,6 +42,36 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Show pause menu items.
+        /// </summary>
+        public void ShowPauseMenu()
+        {
+            Console.WriteLine("Press 'ENTER' advance to next generation...");
+            Console.WriteLine("Press 'ESC' to exit the game...");
+            Console.WriteLine("Press 'S' to save the game...");
+        }
+
+        /// <summary>
+        /// Read input key to selection action available while game on pause.
+        /// Keeps reading until user selects a correct item.
+        /// </summary>
+        /// <returns>User choice.</returns>
+        public GamePauseOption ReadPauseKey()
+        {
+            while (true)
+            {
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.Enter:
+                        return GamePauseOption.Continue;
+                    case ConsoleKey.S:
+                        return GamePauseOption.Save;
+                    case ConsoleKey.Escape:
+                        return GamePauseOption.Exit;
+                }
+            }
+        }
 
         /// <summary>
         /// Read number from the user input within defined range.
@@ -132,6 +162,20 @@ namespace GameOfLife
                     Console.WriteLine(e.Message);
                 }
             }
+        }
+
+        /// <summary>
+        /// Check if user pressed any key.
+        /// </summary>
+        /// <returns>True if any key is down; false otherwise.</returns>
+        public bool IsAnyKeyDown()
+        {
+            if (Console.KeyAvailable)
+            {
+                Console.ReadKey(true);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
