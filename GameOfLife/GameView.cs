@@ -61,11 +61,70 @@ namespace GameOfLife
                     int input = int.Parse(Console.ReadLine());
                     if (input < min || input > max)
                     {
-                        Console.WriteLine("Please enter the number in the range: from {0} to {1}", min ,max);
+                        Console.WriteLine("Please enter the number in the range: from {0} to {1}", min, max);
                     }
                     else
                     {
                         return input;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Read list of numbers from the user input within defined range.
+        /// Keeps asking until user inputs a correct value.
+        /// </summary>
+        /// <param name="label">Label to show while asking for a value.</param>
+        /// <param name="limit">Maximum number of items to read.</param>
+        /// <param name="min">Minimum value to accept.</param>
+        /// <param name="max">Maximum value to accept.</param>
+        /// <returns>A valid number within defined range.</returns>
+        public List<int> AskNumberList(string label, int limit, int min, int max)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.Write("{0} [{1} - {2}] (max {3} items): ", label, min, max, limit);
+                    string[] inputs = Console.ReadLine().Split(" ");
+                    if (inputs.Length < 1)
+                    {
+                        Console.WriteLine("You have to enter at least one number");
+                        continue;
+                    }
+
+                    if (inputs.Length > limit)
+                    {
+                        Console.WriteLine("You cannot enter more than {0} items", limit);
+                        continue;
+                    }
+
+
+                    bool success = true;
+                    var numbers = new List<int>();
+                    foreach (string input in inputs)
+                    {
+                        int number = int.Parse(input);
+                        if (number >= min && number <= max)
+                        {
+                            numbers.Add(number);
+                        }
+                        else
+                        {
+                            success = false;
+                            Console.WriteLine("Each number should be in the range: [{0} - {1}]", min, max);
+                            break;
+                        }
+                    }
+
+                    if (success)
+                    {
+                        return numbers;
                     }
                 }
                 catch (Exception e)

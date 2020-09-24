@@ -91,7 +91,7 @@ namespace GameOfLife
             int rows = view.AskNumber("Enter the number of rows", 1, 45000);
             int columns = view.AskNumber("Enter the number of columns", 1, 45000);
             int count = view.AskNumber("Enter the number of games you want to generate", 1, 1000);
-            displayGames = AskGamesPrintQuantity("Select 8 games you want to see ont the screen separated by a space (max: 8 numbers): ");
+            displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, count);
 
             // Initailize games with randomly dead or alive cells
             for (int i = 0; i < count; i++)
@@ -102,40 +102,7 @@ namespace GameOfLife
             }
         }
 
-        /// <summary>
-        /// Read number of games the user wants to see on the screen.
-        /// </summary>
-        /// <param name="label">Label to add when asking for a value.</param>
-        /// <returns>A list with numbers of games indexes.</returns>
-        private List<int> AskGamesPrintQuantity(string label)
-        {
-            while (true)
-            {
-                try
-                {
-                    Console.Write(label);
-                    string[] size = Console.ReadLine().Split(" ");
-                    var list = new List<int>();
-                    foreach (string s in size)
-                    {
-                        list.Add(int.Parse(s));
-                    }
 
-                    if (size.Length < 0 || size.Length > 8)
-                    {
-                        Console.WriteLine("You entered more tham 8 games. Please enter maximum 8 games.");
-                    }
-                    else
-                    {
-                        return list;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-        }
 
         /// <summary>
         /// Loading games from the file.
@@ -145,7 +112,7 @@ namespace GameOfLife
         {
             // load many games
             games = saver.LoadGames("save.txt");
-            displayGames = AskGamesPrintQuantity("Select 8 games you want to see ont the screen separated by a space (max: 8 numbers): ");
+            displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, games.Count);
             return games != null;
         }
 
