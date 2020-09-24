@@ -10,9 +10,10 @@ namespace GameOfLife
     class GameSaver
     {
         /// <summary>
-        /// Read game state from the file.
+        /// Load game from the text file.
         /// </summary>
-        /// <param name="filename">Path to a file to read.</param>
+        /// <param name="reader">Stream to read game from.</param>
+        /// <returns>Game loaded from the file block.</returns>
         public Game Load(StreamReader reader)
         {
             try
@@ -43,9 +44,10 @@ namespace GameOfLife
         }
 
         /// <summary>
-        /// Save the game to a text file.
+        /// Save game to a text file.
         /// </summary>
-        /// <param name="filename">Path to a file where to write game state.</param>
+        /// <param name="game">Game to save.</param>
+        /// <param name="writer">Stream where to write provided game.</param>
         public void SaveGame(Game game, StreamWriter writer)
         {
             {
@@ -67,6 +69,11 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Save multiple games to a text file.
+        /// </summary>
+        /// <param name="games">List of games to save.</param>
+        /// <param name="filename">Path to a file where to write text contents.</param>
         public void SaveGames(List<Game> games, string filename)
         {
             using (StreamWriter writer = new StreamWriter(filename))
@@ -80,6 +87,11 @@ namespace GameOfLife
             }
         }
 
+        /// <summary>
+        /// Load multiple games from the text file.
+        /// </summary>
+        /// <param name="filename">Path to a text file from which to read games.</param>
+        /// <returns>List of games loaded from the file.</returns>
         public List<Game> LoadGames(string filename)
         {
             List<Game> games = new List<Game>();

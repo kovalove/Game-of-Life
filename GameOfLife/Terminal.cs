@@ -18,6 +18,9 @@ namespace GameOfLife
         private List<Game> games = new List<Game>();
         private List<int> displayGames;
 
+        /// <summary>
+        /// Initialize new terminal instance with default values.
+        /// </summary>
         public Terminal()
         {
             timer = new Timer(1000);
@@ -51,9 +54,9 @@ namespace GameOfLife
         }
 
         /// <summary>
-        /// Loading or creating a new game depending on the user choise.
+        /// Show main menu and perform an operation depending on the user choice.
         /// </summary>
-        /// <returns>New game instance; null if user want to exit the programm.</returns>
+        /// <returns> True if application should start; false if user choose to exit.</returns>
         private bool Start()
         {
             Console.WriteLine("GAME OF LIFE");
@@ -96,9 +99,9 @@ namespace GameOfLife
         }
 
         /// <summary>
-        /// Read the size and initailize games with randomly dead or alive cells.
+        /// Ask user for game paramters and initialize application with new games.
+        /// Games will have randomly assigned dead or alive cells.
         /// </summary>
-        /// <returns>New game states of the user specified size and quantity.</returns>
         private void CreateGame()
         {
             // Read input to start the game
@@ -176,6 +179,12 @@ namespace GameOfLife
                 }
             }
         }
+
+        /// <summary>
+        /// Read number of games the user wants to see on the screen.
+        /// </summary>
+        /// <param name="label">Label to add when asking for a value.</param>
+        /// <returns>A list with numbers of games indexes.</returns>
         private List<int> AskGamesPrintQuantity(string label)
         {
             while (true)
@@ -207,9 +216,9 @@ namespace GameOfLife
         }
 
         /// <summary>
-        /// Loading game from file.
+        /// Loading games from the file.
         /// </summary>
-        /// <returns>Newly crated game instance having data from file.</returns>
+        /// <returns>True when sucessfully loaded; false if error occured or no games were loaded.</returns>
         private bool LoadGame()
         {
             // load many games
@@ -221,8 +230,7 @@ namespace GameOfLife
         /// <summary>
         /// Process user input and decide if game should advance to a next step.
         /// </summary>
-        /// <param name="game">The game in which to perform an operation.</param>
-        /// <returns>True when game should advance to a next step; false to exit the program.</returns>
+        /// <returns>True when program should advance to a next step; false to exit the program.</returns>
         private bool Advance()
         {
             bool pause = false;
@@ -267,9 +275,8 @@ namespace GameOfLife
         }
 
         /// <summary>
-        /// Print game state to the console.
+        /// Print state of previously selected games to the console.
         /// </summary>
-        /// <param name="game">Game to be printed.</param>
         public void Print()
         {
             long processingTime = watch.ElapsedMilliseconds;

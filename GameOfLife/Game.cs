@@ -14,7 +14,7 @@ namespace GameOfLife
         public int Generation { get; private set; } = 1;
 
         /// <summary>
-        /// Initialize primary and auxiliary arrays of the given size.
+        /// Initialize new game of the given size.
         /// </summary>
         /// <param name="rows">Number of rows.</param>
         /// <param name="columns">Number of columns.</param>
@@ -26,6 +26,13 @@ namespace GameOfLife
             Buffer = new bool[rows, columns];
         }
 
+        /// <summary>
+        /// Initialize game from the provided state.
+        /// Detects number of rows and columns from the dimensions of provided array.
+        /// Use this method for loading the game from external source.
+        /// </summary>
+        /// <param name="cells">Initial game state to use.</param>
+        /// <param name="generation">Generation of the provided initial state.</param>
         public Game(bool[,] cells, int generation)
         {
             Cells = cells;
@@ -65,21 +72,21 @@ namespace GameOfLife
         /// <summary>
         /// Check if cell by the given position is alive.
         /// </summary>
-        /// <param name="rows">X coordinate position.</param>
-        /// <param name="columns">Y coordinate position.</param>
+        /// <param name="x">X coordinate position.</param>
+        /// <param name="y">Y coordinate position.</param>
         /// <returns>True if cell is alive; false otherwise.</returns>
-        public bool IsAlive(int rows, int columns)
+        public bool IsAlive(int x, int y)
         {
-            if (rows < 0 || columns < 0)
+            if (x < 0 || y < 0)
             {
                 return false;
             }
-            if (rows >= Rows || columns >= Columns)
+            if (x >= Rows || y >= Columns)
             {
                 return false;
             }
 
-            return Cells[rows, columns];
+            return Cells[x, y];
         }
 
         /// <summary>

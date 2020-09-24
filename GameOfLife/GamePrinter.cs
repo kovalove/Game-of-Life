@@ -8,9 +8,9 @@ namespace GameOfLife
     public class GamePrinter
     {
         /// <summary>
-        /// Print game state to the provided output.
+        /// Print game state to the console.
         /// </summary>
-        /// <param name="output">Destination where to write the game state.</param>
+        /// <param name="gane">Game which state to display.</param>
         public void Print(Game game)
         {
             int count = 0;
