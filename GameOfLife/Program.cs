@@ -7,8 +7,8 @@
     {
         static void Main(string[] args)
         {
-            Terminal terminal = new Terminal();
-            terminal.Run();
+            GameController controller = new GameController();
+            controller.Run();
         }
     }
 }

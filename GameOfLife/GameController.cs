@@ -5,9 +5,9 @@ using System.Timers;
 namespace GameOfLife
 {
     /// <summary>
-    /// Allows to interact with the game through console window.
+    /// Game controller to process and display game steps.
     /// </summary>
-    public class Terminal
+    public class GameController
     {
         private Timer timer;
         private bool waiting;
@@ -17,9 +17,9 @@ namespace GameOfLife
         private List<int> displayGames;
 
         /// <summary>
-        /// Initialize new terminal instance with default values.
+        /// Initialize new instance with default values.
         /// </summary>
-        public Terminal()
+        public GameController()
         {
             timer = new Timer(1000);
             timer.AutoReset = false;
