@@ -50,6 +50,7 @@ namespace GameOfLife
             Console.WriteLine("Press 'ENTER' advance to next generation...");
             Console.WriteLine("Press 'ESC' to exit the game...");
             Console.WriteLine("Press 'S' to save the game...");
+            Console.WriteLine("Press 'C' to change the games on the screen...");
         }
 
         /// <summary>
@@ -67,6 +68,8 @@ namespace GameOfLife
                         return GamePauseOption.Continue;
                     case ConsoleKey.S:
                         return GamePauseOption.Save;
+                    case ConsoleKey.C:
+                        return GamePauseOption.ChangeGames;
                     case ConsoleKey.Escape:
                         return GamePauseOption.Exit;
                 }

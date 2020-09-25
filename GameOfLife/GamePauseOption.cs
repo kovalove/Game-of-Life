@@ -4,6 +4,7 @@
     {
         Continue,
         Save,
+        ChangeGames,
         Exit,
 
     }

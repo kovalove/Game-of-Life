@@ -153,7 +153,9 @@ namespace GameOfLife
                         saver.SaveGames(games, "save.txt");
                         Console.WriteLine("Game successfully saved!");
                         break;
-
+                    case GamePauseOption.ChangeGames:
+                        displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, games.Count);
+                        return true;
                     case GamePauseOption.Exit:
                         return false;
                 }
