@@ -91,8 +91,7 @@ namespace GameOfLife
             int rows = view.AskNumber("Enter the number of rows", 1, 45000);
             int columns = view.AskNumber("Enter the number of columns", 1, 45000);
             int count = view.AskNumber("Enter the number of games you want to generate", 1, 1000);
-            displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, count);
-
+            AskDisplayGames(count);
             // Initailize games with randomly dead or alive cells
             for (int i = 0; i < count; i++)
             {
@@ -112,7 +111,7 @@ namespace GameOfLife
         {
             // load many games
             games = saver.LoadGames("save.txt");
-            displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, games.Count);
+            AskDisplayGames(games.Count);
             return games != null;
         }
 
@@ -154,12 +153,17 @@ namespace GameOfLife
                         Console.WriteLine("Game successfully saved!");
                         break;
                     case GamePauseOption.ChangeGames:
-                        displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, games.Count);
+                        AskDisplayGames(games.Count);
                         return true;
                     case GamePauseOption.Exit:
                         return false;
                 }
             }
+        }
+
+        private void AskDisplayGames(int count)
+        {
+            displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, count);
         }
 
         private void Print()
