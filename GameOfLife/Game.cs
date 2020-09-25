@@ -12,6 +12,8 @@ namespace GameOfLife
         private bool[,] Cells;
         private bool[,] Buffer;
         public int Generation { get; private set; } = 1;
+        public bool Active { get; private set; }
+        public int CountAlive { get; private set; }
 
         /// <summary>
         /// Initialize new game of the given size.
@@ -94,7 +96,10 @@ namespace GameOfLife
         /// </summary>
         public void Step()
         {
+            Active = false;
             Generation++;
+            CountAlive = 0;
+
             for (int r = 0; r < Rows; r++)
             {
                 for (int c = 0; c < Columns; c++)
@@ -107,10 +112,20 @@ namespace GameOfLife
                     else if (nearby == 3)
                     {
                         Buffer[r, c] = true;
-                    } 
+                    }
                     else
                     {
                         Buffer[r, c] = Cells[r, c];
+                    }
+
+                    if (Buffer[r, c])
+                    {
+                        CountAlive++;
+                    }
+
+                    if (Buffer[r, c] != Cells[r, c])
+                    {
+                        Active = true;
                     }
                 }
             }

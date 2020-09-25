@@ -15,6 +15,7 @@ namespace GameOfLife
         private readonly GameSaver saver = new GameSaver();
         private List<Game> games = new List<Game>();
         private List<int> displayGames;
+        private int activeCount;
 
         /// <summary>
         /// Initialize new instance with default values.
@@ -75,9 +76,14 @@ namespace GameOfLife
         /// </summary>
         private void Step()
         {
+            activeCount = 0;
             foreach (Game game in games)
             {
                 game.Step();
+                if (game.Active)
+                {
+                    activeCount++;
+                }
             }
         }
 
@@ -90,18 +96,17 @@ namespace GameOfLife
             // Read input to start the game
             int rows = view.AskNumber("Enter the number of rows", 1, 45000);
             int columns = view.AskNumber("Enter the number of columns", 1, 45000);
-            int count = view.AskNumber("Enter the number of games you want to generate", 1, 1000);
-            AskDisplayGames(count);
+            activeCount = view.AskNumber("Enter the number of games you want to generate", 1, 1000);
+            AskDisplayGames(activeCount);
+
             // Initailize games with randomly dead or alive cells
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < activeCount; i++)
             {
                 Game game = new Game(rows, columns);
                 game.Randomize();
                 games.Add(game);
             }
         }
-
-
 
         /// <summary>
         /// Loading games from the file.
@@ -111,7 +116,8 @@ namespace GameOfLife
         {
             // load many games
             games = saver.LoadGames("save.txt");
-            AskDisplayGames(games.Count);
+            activeCount = games.Count;
+            AskDisplayGames(activeCount);
             return games != null;
         }
 
@@ -168,7 +174,7 @@ namespace GameOfLife
 
         private void Print()
         {
-            view.PrintGames(games, displayGames);
+            view.PrintGames(games, displayGames, activeCount);
         }
 
         private void StartTimer()
