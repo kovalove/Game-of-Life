@@ -94,8 +94,8 @@ namespace GameOfLife
         private void CreateGame()
         {
             // Read input to start the game
-            int rows = view.AskNumber("Enter the number of rows", 1, 45000);
-            int columns = view.AskNumber("Enter the number of columns", 1, 45000);
+            int rows = view.AskNumber("Enter the number of rows", 1, 20);
+            int columns = view.AskNumber("Enter the number of columns", 1, 20);
             activeCount = view.AskNumber("Enter the number of games you want to generate", 1, 1000);
             AskDisplayGames(activeCount);
 
