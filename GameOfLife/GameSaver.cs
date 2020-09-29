@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace GameOfLife
 {
@@ -9,6 +11,17 @@ namespace GameOfLife
     /// </summary>
     class GameSaver
     {
+        private string filename;
+
+        /// <summary>
+        /// Initialize GameSaver.
+        /// </summary>
+        /// <param name="filename">Path to a file where to write or read json contents.</param>
+        public GameSaver(string filename)
+        {
+            this.filename = filename;
+        }
+
         /// <summary>
         /// Load game from the text file.
         /// </summary>
@@ -74,7 +87,7 @@ namespace GameOfLife
         /// </summary>
         /// <param name="games">List of games to save.</param>
         /// <param name="filename">Path to a file where to write text contents.</param>
-        public void SaveGames(List<Game> games, string filename)
+        public void SaveGames(List<Game> games)
         {
             using (StreamWriter writer = new StreamWriter(filename))
             {
@@ -92,7 +105,7 @@ namespace GameOfLife
         /// </summary>
         /// <param name="filename">Path to a text file from which to read games.</param>
         /// <returns>List of games loaded from the file.</returns>
-        public List<Game> LoadGames(string filename)
+        public List<Game> LoadGames()
         {
             List<Game> games = new List<Game>();
 
@@ -109,6 +122,43 @@ namespace GameOfLife
             }
 
             return games;
+        }
+
+        /// <summary>
+        /// Load multiple games from the json file.
+        /// </summary>
+        /// <returns>List of games loaded from the file.</returns>
+        public List<Game> LoadGamesJson()
+        {
+            try
+            {
+                string json = File.ReadAllText(filename);
+                var data = JsonConvert.DeserializeObject<List<GameInfo>>(json);
+                return data.Select(info => new Game(info.Cells, info.Generation)).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Save multiple games to a json file.
+        /// </summary>
+        /// <param name="games">List of games to save.</param>
+        public void SaveGamesJson(List<Game> games)
+        {
+            try
+            {
+                var data = games.Select(game => game.AsGameInfo()).ToList();
+                var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+                File.WriteAllText(filename, json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

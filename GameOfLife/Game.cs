@@ -150,5 +150,18 @@ namespace GameOfLife
                 }
             }
         }
+
+        /// <summary>
+        /// Convert to serializeable data.
+        /// </summary>
+        /// <returns>Game serializeable data.</returns>
+        public GameInfo AsGameInfo()
+        {
+            return new GameInfo()
+            {
+                Cells = Cells,
+                Generation = Generation,
+            };
+        }
     }
 }

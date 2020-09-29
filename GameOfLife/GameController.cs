@@ -12,7 +12,7 @@ namespace GameOfLife
         private Timer timer;
         private bool waiting;
         private readonly GameView view = new GameView();
-        private readonly GameSaver saver = new GameSaver();
+        private readonly GameSaver saver = new GameSaver("save.json");
         private List<Game> games = new List<Game>();
         private List<int> displayGames;
         private int activeCount;
@@ -115,7 +115,7 @@ namespace GameOfLife
         private bool LoadGame()
         {
             // load many games
-            games = saver.LoadGames("save.txt");
+            games = saver.LoadGamesJson();
             activeCount = games.Count;
             AskDisplayGames(activeCount);
             return games != null;
@@ -155,7 +155,7 @@ namespace GameOfLife
 
                     case GamePauseOption.Save:
                         // save all games
-                        saver.SaveGames(games, "save.txt");
+                        saver.SaveGamesJson(games);
                         Console.WriteLine("Game successfully saved!");
                         break;
                     case GamePauseOption.ChangeGames:
