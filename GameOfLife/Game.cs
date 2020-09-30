@@ -9,10 +9,30 @@ namespace GameOfLife
     {
         private bool[,] Cells;
         private bool[,] Buffer;
+
+        /// <summary>
+        /// Count of rows in the the game field.
+        /// </summary>
         public int Rows { get; private set; }
+
+        /// <summary>
+        /// Count of columns in the game field.
+        /// </summary>
         public int Columns { get; private set; }
+
+        /// <summary>
+        /// For how long the game is running.
+        /// </summary>
         public int Generation { get; private set; } = 1;
+
+        /// <summary>
+        /// True if game is alive and false otherwise.
+        /// </summary>
         public bool Active { get; private set; }
+
+        /// <summary>
+        /// Count of alive cells in the game field.
+        /// </summary>
         public int CountAlive { get; private set; }
 
         /// <summary>

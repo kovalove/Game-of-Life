@@ -209,7 +209,7 @@ namespace GameOfLife
         /// <param name="games">List of games.</param>
         /// <param name="selections">List of games indexes to display.</param>
         /// <param name="activeCount">Count of live games.</param>
-        /// <param name="totalAlive">Count of total alive cells.</param>
+        /// <param name="totalAlive">Count of total alive cells from all games.</param>
         public void PrintGames(List<Game> games, List<int> selections, int activeCount, int totalAlive)
         {
             Console.Clear();
