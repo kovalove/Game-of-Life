@@ -7,10 +7,10 @@ namespace GameOfLife
     /// </summary>
     public class Game
     {
-        public int Rows { get; private set; }
-        public int Columns { get; private set; }
         private bool[,] Cells;
         private bool[,] Buffer;
+        public int Rows { get; private set; }
+        public int Columns { get; private set; }
         public int Generation { get; private set; } = 1;
         public bool Active { get; private set; }
         public int CountAlive { get; private set; }
