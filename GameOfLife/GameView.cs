@@ -137,7 +137,6 @@ namespace GameOfLife
                         continue;
                     }
 
-
                     bool success = true;
                     var numbers = new List<int>();
                     foreach (string input in inputs)
@@ -184,7 +183,7 @@ namespace GameOfLife
         /// <summary>
         /// Print game state to the console.
         /// </summary>
-        /// <param name="gane">Game which state to display.</param>
+        /// <param name="game">Game which state to display.</param>
         public void Print(Game game)
         {
             for (int r = 0; r < game.Rows; r++)
@@ -209,7 +208,7 @@ namespace GameOfLife
         /// </summary>
         /// <param name="games">List of games.</param>
         /// <param name="selections">List of games indexes to display.</param>
-        public void PrintGames(List<Game> games, List<int> selections, int activeCount)
+        public void PrintGames(List<Game> games, List<int> selections, int activeCount, int totalAlive)
         {
             Console.Clear();
             foreach (int index in selections)
@@ -217,7 +216,9 @@ namespace GameOfLife
                 Game game = games[index - 1];
                 Print(game);
             }
+
             Console.WriteLine("Live games count: {0}", activeCount);
+            Console.WriteLine("Total live cells count: {0}", totalAlive);
         }
     }
 }

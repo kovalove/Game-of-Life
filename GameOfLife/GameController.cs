@@ -16,6 +16,7 @@ namespace GameOfLife
         private List<Game> games = new List<Game>();
         private List<int> displayGames;
         private int activeCount;
+        private int totalAlive;
 
         /// <summary>
         /// Initialize new instance with default values.
@@ -77,9 +78,13 @@ namespace GameOfLife
         private void Step()
         {
             activeCount = 0;
+            totalAlive = 0;
+
             foreach (Game game in games)
             {
                 game.Step();
+                totalAlive += game.CountAlive;
+
                 if (game.Active)
                 {
                     activeCount++;
@@ -105,6 +110,7 @@ namespace GameOfLife
                 Game game = new Game(rows, columns);
                 game.Randomize();
                 games.Add(game);
+                totalAlive += game.CountAlive;
             }
         }
 
@@ -117,6 +123,12 @@ namespace GameOfLife
             // load many games
             games = saver.LoadGamesJson();
             activeCount = games.Count;
+
+            foreach (Game game in games)
+            {
+                totalAlive += game.CountAlive; 
+            }
+
             AskDisplayGames(activeCount);
             return games != null;
         }
@@ -174,7 +186,7 @@ namespace GameOfLife
 
         private void Print()
         {
-            view.PrintGames(games, displayGames, activeCount);
+            view.PrintGames(games, displayGames, activeCount, totalAlive);
         }
 
         private void StartTimer()

@@ -42,6 +42,14 @@ namespace GameOfLife
             Columns = cells.GetLength(1);
             Buffer = new bool[Rows, Columns];
             Generation = generation;
+
+            foreach (bool alive in Cells)
+            {
+                if (alive)
+                {
+                    CountAlive++;
+                }
+            }
         }
 
         /// <summary>
@@ -140,6 +148,8 @@ namespace GameOfLife
         /// </summary>
         public void Randomize()
         {
+            CountAlive = 0;
+
             Random random = new Random();
 
             for (int r = 0; r < Rows; r++)
@@ -147,6 +157,10 @@ namespace GameOfLife
                 for (int c = 0; c < Columns; c++)
                 {
                     Cells[r, c] = random.Next(0, 2) == 1;
+                    if (Cells[r, c])
+                    {
+                        CountAlive++;
+                    }
                 }
             }
         }
