@@ -11,12 +11,12 @@ namespace GameOfLife
         private bool[,] Buffer;
 
         /// <summary>
-        /// Count of rows in the the game field.
+        /// Height in the the game field.
         /// </summary>
         public int Rows { get; private set; }
 
         /// <summary>
-        /// Count of columns in the game field.
+        /// Width in the game field.
         /// </summary>
         public int Columns { get; private set; }
 
