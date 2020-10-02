@@ -8,6 +8,9 @@ namespace GameOfLife
     /// </summary>
     public class GameView
     {
+        const char ALIVE_CELL = '+';
+        const char DEAD_CELL = ' ';
+
         /// <summary>
         /// Show main menu asking for user choice.
         /// Keeps asking until user selects a correct item.
@@ -191,7 +194,7 @@ namespace GameOfLife
                 for (int c = 0; c < game.Columns; c++)
                 {
                     bool alive = game.IsAlive(r, c);
-                    Console.Write(alive ? "+" : " ");
+                    Console.Write(alive ? ALIVE_CELL : DEAD_CELL);
                 }
 
                 Console.WriteLine();

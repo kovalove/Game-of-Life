@@ -11,6 +11,10 @@ namespace GameOfLife
     /// </summary>
     class GameSaver
     {
+        const char ALIVE_CELL = '+';
+        const char DEAD_CELL = ' ';
+
+
         private string filename;
 
         /// <summary>
@@ -42,7 +46,7 @@ namespace GameOfLife
                     string line = reader.ReadLine();
                     for (int c = 0; c < line.Length; c++)
                     {
-                        bool alive = line[c] == '+';
+                        bool alive = line[c] == ALIVE_CELL;
                         cells[r, c] = alive;
                     }
                 }
@@ -75,7 +79,7 @@ namespace GameOfLife
                 {
                     for (int c = 0; c < game.Columns; c++)
                     {
-                        writer.Write(game.IsAlive(r, c) ? "+" : " ");
+                        writer.Write(game.IsAlive(r, c) ? ALIVE_CELL : DEAD_CELL);
                     }
                     writer.WriteLine();
                 }
