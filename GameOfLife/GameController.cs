@@ -135,6 +135,7 @@ namespace GameOfLife
 
         /// <summary>
         /// Process user input and decide if game should advance to a next step.
+        /// Returns true when program should advance to a next step; false to exit the program.
         /// </summary>
         /// <returns>True when program should advance to a next step; false to exit the program.</returns>
         private bool Advance()
