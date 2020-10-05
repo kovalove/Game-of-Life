@@ -230,7 +230,7 @@ namespace GameOfLife
             Console.Clear();
             foreach (int index in selections)
             {
-                Game game = games[index - 1];
+                Game game = games[index];
                 Print(game);
             }
 

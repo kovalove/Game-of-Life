@@ -203,6 +203,11 @@ namespace GameOfLife
         private void AskDisplayGames(int count)
         {
             displayGames = view.AskNumberList("Select games you want to see on the screen separated by a space", 8, 1, count);
+            // convert to zero-based indexes
+            for (int i = 0; i < displayGames.Count; i++)
+            {
+                displayGames[i]--;
+            }
         }
 
         private void Print()
