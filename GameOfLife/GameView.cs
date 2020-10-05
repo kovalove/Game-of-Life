@@ -80,6 +80,15 @@ namespace GameOfLife
         }
 
         /// <summary>
+        /// Show the message to the user.
+        /// </summary>
+        /// <param name="message">The message to show.</param>
+        public void ShowMessage(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        /// <summary>
         /// Read number from the user input within defined range.
         /// Keeps asking until user inputs a correct value.
         /// </summary>

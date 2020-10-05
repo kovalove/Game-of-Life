@@ -35,7 +35,7 @@ namespace GameOfLife
         {
             if (!Start())
             {
-                Console.WriteLine("Exiting...");
+                view.ShowMessage("Exiting...");
                 return;
             }
 
@@ -140,7 +140,8 @@ namespace GameOfLife
         /// <returns>True when program should advance to a next step; false to exit the program.</returns>
         private bool Advance()
         {
-            Console.WriteLine("Press any key to pause...");
+            view.ShowMessage("Press any key to pause...");
+
             while (waiting)
             {
                 if (view.IsAnyKeyDown())
@@ -169,7 +170,7 @@ namespace GameOfLife
                     case GamePauseOption.Save:
                         // save all games
                         saver.SaveGamesJson(games);
-                        Console.WriteLine("Game successfully saved!");
+                        view.ShowMessage("Game successfully saved!");
                         break;
                     case GamePauseOption.ChangeGames:
                         AskDisplayGames(games.Count);
