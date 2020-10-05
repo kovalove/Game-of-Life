@@ -33,31 +33,23 @@ namespace GameOfLife
         /// <returns>Game loaded from the file block.</returns>
         public Game Load(StreamReader reader)
         {
-            try
-            {
-                string[] size = reader.ReadLine().Split(" ");
-                int rows = int.Parse(size[0]);
-                int columns = int.Parse(size[1]);
-                int generation = int.Parse(size[2]);
-                bool[,] cells = new bool[rows, columns];
+            string[] size = reader.ReadLine().Split(" ");
+            int rows = int.Parse(size[0]);
+            int columns = int.Parse(size[1]);
+            int generation = int.Parse(size[2]);
+            bool[,] cells = new bool[rows, columns];
 
-                for (int r = 0; r < rows; r++)
+            for (int r = 0; r < rows; r++)
+            {
+                string line = reader.ReadLine();
+                for (int c = 0; c < line.Length; c++)
                 {
-                    string line = reader.ReadLine();
-                    for (int c = 0; c < line.Length; c++)
-                    {
-                        bool alive = line[c] == ALIVE_CELL;
-                        cells[r, c] = alive;
-                    }
+                    bool alive = line[c] == ALIVE_CELL;
+                    cells[r, c] = alive;
                 }
+            }
 
-                return new Game(cells, generation);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
+            return new Game(cells, generation);
         }
 
         /// <summary>
@@ -67,22 +59,20 @@ namespace GameOfLife
         /// <param name="writer">Stream where to write provided game.</param>
         public void SaveGame(Game game, StreamWriter writer)
         {
-            {
-                writer.Write(game.Rows);
-                writer.Write(' ');
-                writer.Write(game.Columns);
-                writer.Write(' '); ;
-                writer.Write(game.Generation);
-                writer.WriteLine();
+            writer.Write(game.Rows);
+            writer.Write(' ');
+            writer.Write(game.Columns);
+            writer.Write(' '); ;
+            writer.Write(game.Generation);
+            writer.WriteLine();
 
-                for (int r = 0; r < game.Rows; r++)
+            for (int r = 0; r < game.Rows; r++)
+            {
+                for (int c = 0; c < game.Columns; c++)
                 {
-                    for (int c = 0; c < game.Columns; c++)
-                    {
-                        writer.Write(game.IsAlive(r, c) ? ALIVE_CELL : DEAD_CELL);
-                    }
-                    writer.WriteLine();
+                    writer.Write(game.IsAlive(r, c) ? ALIVE_CELL : DEAD_CELL);
                 }
+                writer.WriteLine();
             }
         }
 
@@ -134,17 +124,9 @@ namespace GameOfLife
         /// <returns>List of games loaded from the file.</returns>
         public List<Game> LoadGamesJson()
         {
-            try
-            {
-                string json = File.ReadAllText(filename);
-                var data = JsonConvert.DeserializeObject<List<GameInfo>>(json);
-                return data.Select(info => new Game(info.Cells, info.Generation)).ToList();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
+            string json = File.ReadAllText(filename);
+            var data = JsonConvert.DeserializeObject<List<GameInfo>>(json);
+            return data.Select(info => new Game(info.Cells, info.Generation)).ToList();
         }
 
         /// <summary>
@@ -153,16 +135,9 @@ namespace GameOfLife
         /// <param name="games">List of games to save.</param>
         public void SaveGamesJson(List<Game> games)
         {
-            try
-            {
-                var data = games.Select(game => game.AsGameInfo()).ToList();
-                var json = JsonConvert.SerializeObject(data, Formatting.Indented);
-                File.WriteAllText(filename, json);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            var data = games.Select(game => game.AsGameInfo()).ToList();
+            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            File.WriteAllText(filename, json);
         }
     }
 }

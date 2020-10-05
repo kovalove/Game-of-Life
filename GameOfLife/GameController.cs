@@ -120,17 +120,25 @@ namespace GameOfLife
         /// <returns>True when sucessfully loaded; false if error occured or no games were loaded.</returns>
         private bool LoadGame()
         {
-            // load many games
-            games = saver.LoadGamesJson();
-            activeCount = games.Count;
-
-            foreach (Game game in games)
+            try
             {
-                totalAlive += game.CountAlive; 
-            }
+                // load many games
+                games = saver.LoadGamesJson();
+                activeCount = games.Count;
 
-            AskDisplayGames(activeCount);
-            return games != null;
+                foreach (Game game in games)
+                {
+                    totalAlive += game.CountAlive;
+                }
+
+                AskDisplayGames(activeCount);
+                return games != null;
+            }
+            catch (Exception e)
+            {
+                view.ShowMessage("Unable to load: " + e.Message);
+                return false;
+            }
         }
 
         /// <summary>
@@ -168,9 +176,7 @@ namespace GameOfLife
                         return true;
 
                     case GamePauseOption.Save:
-                        // save all games
-                        saver.SaveGamesJson(games);
-                        view.ShowMessage("Game successfully saved!");
+                        Save();
                         break;
                     case GamePauseOption.ChangeGames:
                         AskDisplayGames(games.Count);
@@ -178,6 +184,19 @@ namespace GameOfLife
                     case GamePauseOption.Exit:
                         return false;
                 }
+            }
+        }
+
+        public void Save()
+        {
+            try
+            {
+                saver.SaveGamesJson(games);
+                view.ShowMessage("Game successfully saved!");
+            }
+            catch (Exception e)
+            {
+                view.ShowMessage("Unable to save: " + e.Message);
             }
         }
 
