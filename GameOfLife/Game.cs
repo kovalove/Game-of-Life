@@ -166,11 +166,9 @@ namespace GameOfLife
         /// <summary>
         /// Randomly generate dead and alive cells.
         /// </summary>
-        public void Randomize()
+        public void Randomize(Random random)
         {
             CountAlive = 0;
-
-            Random random = new Random();
 
             for (int r = 0; r < Rows; r++)
             {

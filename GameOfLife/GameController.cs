@@ -11,6 +11,7 @@ namespace GameOfLife
     {
         private Timer timer;
         private bool waiting;
+        private readonly Random random = new Random();
         private readonly GameView view = new GameView();
         private readonly GameSaver saver = new GameSaver("save.json");
         private List<Game> games = new List<Game>();
@@ -108,7 +109,7 @@ namespace GameOfLife
             for (int i = 0; i < activeCount; i++)
             {
                 Game game = new Game(rows, columns);
-                game.Randomize();
+                game.Randomize(random);
                 games.Add(game);
                 totalAlive += game.CountAlive;
             }
