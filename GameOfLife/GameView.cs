@@ -91,23 +91,25 @@ namespace GameOfLife
         {
             while (true)
             {
-                try
+                Console.Write(label + " [{0} - {1}]: ", min, max);
+
+                if (int.TryParse(Console.ReadLine(), out int number))
                 {
-                    Console.Write(label + " [{0} - {1}]: ", min, max);
-                    int input = int.Parse(Console.ReadLine());
-                    if (input < min || input > max)
+                    if (number < min || number > max)
                     {
                         Console.WriteLine("Please enter the number in the range: from {0} to {1}", min, max);
                     }
                     else
                     {
-                        return input;
+                        return number;
                     }
                 }
-                catch (Exception e)
+
+                else
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine("Value should be an integer");
                 }
+
             }
         }
 
@@ -124,27 +126,26 @@ namespace GameOfLife
         {
             while (true)
             {
-                try
+                Console.Write("{0} [{1} - {2}] (max {3} items): ", label, min, max, limit);
+                string[] inputs = Console.ReadLine().Split(" ");
+                if (inputs.Length < 1)
                 {
-                    Console.Write("{0} [{1} - {2}] (max {3} items): ", label, min, max, limit);
-                    string[] inputs = Console.ReadLine().Split(" ");
-                    if (inputs.Length < 1)
-                    {
-                        Console.WriteLine("You have to enter at least one number");
-                        continue;
-                    }
+                    Console.WriteLine("You have to enter at least one number");
+                    continue;
+                }
 
-                    if (inputs.Length > limit)
-                    {
-                        Console.WriteLine("You cannot enter more than {0} items", limit);
-                        continue;
-                    }
+                if (inputs.Length > limit)
+                {
+                    Console.WriteLine("You cannot enter more than {0} items", limit);
+                    continue;
+                }
 
-                    bool success = true;
-                    var numbers = new List<int>();
-                    foreach (string input in inputs)
+                bool success = true;
+                var numbers = new List<int>();
+                foreach (string input in inputs)
+                {
+                    if (int.TryParse(input, out int number))
                     {
-                        int number = int.Parse(input);
                         if (number >= min && number <= max)
                         {
                             numbers.Add(number);
@@ -156,15 +157,17 @@ namespace GameOfLife
                             break;
                         }
                     }
-
-                    if (success)
+                    else
                     {
-                        return numbers;
+                        success = false;
+                        Console.WriteLine("Value should be an integer");
+                        break;
                     }
                 }
-                catch (Exception e)
+
+                if (success)
                 {
-                    Console.WriteLine(e.Message);
+                    return numbers;
                 }
             }
         }
