@@ -1,5 +1,8 @@
 ﻿namespace GameOfLife
 {
+    /// <summary>
+    /// Main menu possible choices.
+    /// </summary>
     public enum GameMenuOption
     {
         NewGame = 1,

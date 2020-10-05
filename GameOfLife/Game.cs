@@ -26,7 +26,7 @@ namespace GameOfLife
         public int Generation { get; private set; } = 1;
 
         /// <summary>
-        /// True if game is alive and false otherwise.
+        /// True if game is changing the state when new generation and false otherwise.
         /// </summary>
         public bool Active { get; private set; }
 
